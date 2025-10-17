@@ -1,0 +1,529 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registro de Saída - Estacionamento</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .container {
+            max-width: 500px;
+            width: 100%;
+        }
+
+        .card {
+            background: white;
+            padding: 40px;
+            border-radius: 24px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            animation: slideUp 0.5s ease-out;
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 35px;
+        }
+
+        .logo {
+            font-size: 4.5em;
+            margin-bottom: 15px;
+            animation: bounce 2s infinite;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        h1 {
+            color: #2d3748;
+            font-size: 2em;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+
+        .subtitle {
+            color: #718096;
+            font-size: 1.05em;
+        }
+
+        .info-box {
+            background: linear-gradient(135deg, #e6f7ff 0%, #bae7ff 100%);
+            border-left: 4px solid #1890ff;
+            padding: 18px;
+            border-radius: 12px;
+            margin-bottom: 30px;
+        }
+
+        .info-box p {
+            color: #096dd9;
+            margin: 0;
+            line-height: 1.6;
+            font-weight: 500;
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 10px;
+            color: #2d3748;
+            font-weight: 600;
+            font-size: 0.95em;
+        }
+
+        label .required {
+            color: #f56565;
+        }
+
+        input, select {
+            width: 100%;
+            padding: 16px;
+            border: 2px solid #e2e8f0;
+            border-radius: 12px;
+            font-size: 16px;
+            transition: all 0.3s;
+            background: #f7fafc;
+        }
+
+        input:focus, select:focus {
+            outline: none;
+            border-color: #667eea;
+            background: white;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        .btn {
+            width: 100%;
+            padding: 18px;
+            background: linear-gradient(135deg, #48bb78 0%, #38a169 100%);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-size: 18px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin-top: 10px;
+            box-shadow: 0 4px 12px rgba(72, 187, 120, 0.4);
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(72, 187, 120, 0.5);
+        }
+
+        .btn:active {
+            transform: translateY(0);
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.85);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .modal.active {
+            display: flex;
+            animation: fadeIn 0.3s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .modal-content {
+            background: white;
+            padding: 45px;
+            border-radius: 24px;
+            max-width: 550px;
+            width: 100%;
+            max-height: 90vh;
+            overflow-y: auto;
+            animation: modalSlide 0.4s ease-out;
+        }
+
+        @keyframes modalSlide {
+            from {
+                opacity: 0;
+                transform: scale(0.9) translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1) translateY(0);
+            }
+        }
+
+        .success-icon {
+            text-align: center;
+            margin-bottom: 25px;
+        }
+
+        .success-icon-circle {
+            width: 100px;
+            height: 100px;
+            background: linear-gradient(135deg, #48bb78 0%, #38a169 100%);
+            border-radius: 50%;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 50px;
+            animation: scaleIn 0.5s ease-out;
+        }
+
+        @keyframes scaleIn {
+            from { transform: scale(0); }
+            to { transform: scale(1); }
+        }
+
+        .success-title {
+            color: #2d3748;
+            font-size: 2em;
+            font-weight: 700;
+            text-align: center;
+            margin-bottom: 15px;
+        }
+
+        .liberation-badge {
+            background: linear-gradient(135deg, #48bb78 0%, #38a169 100%);
+            color: white;
+            padding: 25px;
+            border-radius: 16px;
+            text-align: center;
+            margin: 25px 0;
+            box-shadow: 0 8px 24px rgba(72, 187, 120, 0.3);
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); box-shadow: 0 8px 24px rgba(72, 187, 120, 0.3); }
+            50% { transform: scale(1.02); box-shadow: 0 12px 32px rgba(72, 187, 120, 0.4); }
+        }
+
+        .liberation-badge h3 {
+            font-size: 2em;
+            margin-bottom: 8px;
+        }
+
+        .liberation-badge p {
+            font-size: 1.1em;
+            opacity: 0.95;
+        }
+
+        .confirmation-info {
+            background: #f7fafc;
+            padding: 25px;
+            border-radius: 16px;
+            margin: 20px 0;
+        }
+
+        .confirmation-info p {
+            margin: 12px 0;
+            font-size: 1.05em;
+            line-height: 1.7;
+            color: #2d3748;
+        }
+
+        .confirmation-info strong {
+            color: #48bb78;
+            font-weight: 600;
+        }
+
+        .highlight-box {
+            background: linear-gradient(135deg, #fef5e7 0%, #fbeee6 100%);
+            border-left: 4px solid #f39c12;
+            padding: 18px;
+            border-radius: 12px;
+            margin: 20px 0;
+        }
+
+        .highlight-box strong {
+            color: #d68910;
+        }
+
+        .btn-group {
+            display: flex;
+            gap: 12px;
+            margin-top: 25px;
+        }
+
+        .btn-secondary {
+            flex: 1;
+            padding: 15px;
+            background: #667eea;
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .btn-secondary:hover {
+            background: #5568d3;
+            transform: translateY(-2px);
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 2px solid #e2e8f0;
+        }
+
+        .footer p {
+            color: #a0aec0;
+            font-size: 0.9em;
+        }
+
+        @media (max-width: 600px) {
+            .card {
+                padding: 30px 25px;
+            }
+            
+            h1 {
+                font-size: 1.6em;
+            }
+            
+            .logo {
+                font-size: 3.5em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="card">
+            <div class="header">
+                <div class="logo">🚗</div>
+                <h1>Registro de Saída</h1>
+                <p class="subtitle">Estacionamento Hospitalar</p>
+            </div>
+
+            <div class="info-box">
+                <p>📝 Preencha todos os campos abaixo para registrar sua saída e receber o comprovante.</p>
+            </div>
+
+            <form id="exitForm">
+                <div class="form-group">
+                    <label>Local do Estacionamento <span class="required">*</span></label>
+                    <select id="location" required>
+                        <option value="">Selecione o local</option>
+                        <option value="hvs">🏥 Hospital Vila da Serra</option>
+                        <option value="oncobio">🏥 ONCOBIO - Centro Oncológico</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>CRM <span class="required">*</span></label>
+                    <input type="text" id="crm" placeholder="Digite seu CRM" required>
+                </div>
+
+                <div class="form-group">
+                    <label>Nome Completo <span class="required">*</span></label>
+                    <input type="text" id="name" placeholder="Dr(a). Nome Completo" required>
+                </div>
+
+                <div class="form-group">
+                    <label>Especialidade <span class="required">*</span></label>
+                    <input type="text" id="specialty" placeholder="Ex: Cardiologia, Ortopedia..." required>
+                </div>
+
+                <div class="form-group">
+                    <label>Telefone <span class="required">*</span></label>
+                    <input type="tel" id="phone" placeholder="(00) 00000-0000" required>
+                </div>
+
+                <button type="submit" class="btn">✓ Gerar Comprovante de Saída</button>
+            </form>
+
+            <div class="footer">
+                <p>Sistema de Controle de Estacionamento</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal de Confirmação -->
+    <div id="confirmationModal" class="modal">
+        <div class="modal-content">
+            <div class="success-icon">
+                <div class="success-icon-circle">✓</div>
+            </div>
+            
+            <h2 class="success-title">Registro Confirmado!</h2>
+            
+            <div class="liberation-badge">
+                <h3>🎫 ESTACIONAMENTO LIBERADO</h3>
+                <p>Apresente este comprovante na saída</p>
+            </div>
+            
+            <div class="confirmation-info" id="confirmationInfo">
+                <!-- Preenchido via JavaScript -->
+            </div>
+            
+            <div class="highlight-box">
+                <p style="margin: 0;"><strong>✓ Vaga autorizada pela Diretoria</strong></p>
+            </div>
+            
+            <div class="btn-group">
+                <button class="btn-secondary" onclick="window.print()">🖨️ Imprimir</button>
+                <button class="btn-secondary" onclick="resetForm()">✓ Nova Saída</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Ao submeter o formulário
+        document.getElementById('exitForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const formData = {
+                location: document.getElementById('location').value,
+                crm: document.getElementById('crm').value.trim(),
+                name: document.getElementById('name').value.trim(),
+                specialty: document.getElementById('specialty').value.trim(),
+                phone: document.getElementById('phone').value.trim()
+            };
+
+            console.log('📝 Salvando registro:', formData);
+
+            // Salvar no localStorage
+            if (saveToStorage(formData)) {
+                console.log('✅ Registro salvo com sucesso!');
+                showConfirmation(formData);
+            } else {
+                console.error('❌ Erro ao salvar');
+                alert('Erro ao salvar registro. Tente novamente.');
+            }
+        });
+
+        function saveToStorage(data) {
+            try {
+                // Pegar dados existentes
+                let parkingData = localStorage.getItem('parkingData');
+                
+                if (parkingData) {
+                    parkingData = JSON.parse(parkingData);
+                } else {
+                    parkingData = {
+                        vehicles: { hvs: [], oncobio: [] },
+                        history: []
+                    };
+                }
+
+                // Criar registro com timestamp
+                const now = new Date();
+                const record = {
+                    id: Date.now(),
+                    location: data.location,
+                    crm: data.crm,
+                    name: data.name,
+                    specialty: data.specialty,
+                    phone: data.phone,
+                    exitTime: now.toISOString(),
+                    entryTime: now.toISOString(),
+                    duration: 0
+                };
+
+                // Adicionar ao histórico
+                parkingData.history.push(record);
+
+                // Salvar de volta
+                localStorage.setItem('parkingData', JSON.stringify(parkingData));
+
+                // Verificar
+                const check = JSON.parse(localStorage.getItem('parkingData'));
+                console.log('✅ Total de registros:', check.history.length);
+                console.log('✅ Último registro:', check.history[check.history.length - 1]);
+
+                return true;
+            } catch (error) {
+                console.error('❌ Erro:', error);
+                return false;
+            }
+        }
+
+        function showConfirmation(data) {
+            const locationName = data.location === 'hvs' 
+                ? 'Hospital Vila da Serra' 
+                : 'ONCOBIO - Centro Oncológico';
+            
+            const now = new Date();
+            const dateTime = now.toLocaleString('pt-BR', { 
+                day: '2-digit',
+                month: '2-digit',
+                year: 'numeric',
+                hour: '2-digit', 
+                minute: '2-digit' 
+            });
+            
+            const info = `
+                <p><strong>Data/Hora:</strong> ${dateTime}</p>
+                <p><strong>Nome:</strong> ${data.name}</p>
+                <p><strong>CRM:</strong> ${data.crm}</p>
+                <p><strong>Especialidade:</strong> ${data.specialty}</p>
+                <p><strong>Telefone:</strong> ${data.phone}</p>
+                <p><strong>📍 Local:</strong> ${locationName}</p>
+            `;
+            
+            document.getElementById('confirmationInfo').innerHTML = info;
+            document.getElementById('confirmationModal').classList.add('active');
+        }
+
+        function resetForm() {
+            document.getElementById('confirmationModal').classList.remove('active');
+            document.getElementById('exitForm').reset();
+        }
+
+        // Máscara de telefone
+        document.getElementById('phone').addEventListener('input', function(e) {
+            let value = e.target.value.replace(/\D/g, '');
+            if (value.length <= 11) {
+                value = value.replace(/^(\d{2})(\d)/g, '($1) $2');
+                value = value.replace(/(\d)(\d{4})$/, '$1-$2');
+            }
+            e.target.value = value;
+        });
+
+        console.log('🚀 Formulário carregado e pronto!');
+    </script>
+</body>
+</html>
