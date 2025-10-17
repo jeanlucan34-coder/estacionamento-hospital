@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Debug - Sistema de Estacionamento</title>
+    <style>
+        body {
+            font-family: monospace;
+            padding: 20px;
+            background: #1a1a1a;
+            color: #00ff00;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        h1 {
+            color: #00ff00;
+            border-bottom: 2px solid #00ff00;
+            padding-bottom: 10px;
+        }
+        
+        .section {
+            background: #2a2a2a;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 8px;
+            border: 2px solid #00ff00;
+        }
+        
+        button {
+            padding: 15px 30px;
+            margin: 10px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            border: 2px solid #00ff00;
+            background: #2a2a2a;
+            color: #00ff00;
+            border-radius: 5px;
+        }
+        
+        button:hover {
+            background: #00ff00;
+            color: #1a1a1a;
+        }
+        
+        .log {
+            background: #0a0a0a;
+            padding: 15px;
+            margin: 10px 0;
+            border-left: 4px solid #00ff00;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+        }
+        
+        .error {
+            border-left-color: #ff0000;
+            color: #ff0000;
+        }
+        
+        .success {
+            border-left-color: #00ff00;
+            color: #00ff00;
+        }
+        
+        .warning {
+            border-left-color: #ffff00;
+            color: #ffff00;
+        }
+        
+        input {
+            padding: 10px;
+            margin: 5px 0;
+            background: #2a2a2a;
+            border: 2px solid #00ff00;
+            color: #00ff00;
+            width: 100%;
+            font-family: monospace;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🔍 DEBUG - SISTEMA DE ESTACIONAMENTO</h1>
+        
+        <div class="section">
+            <h2>📊 STATUS DO LOCALSTORAGE</h2>
+            <button onclick="checkStorage()">🔍 Verificar localStorage</button>
+            <button onclick="clearStorage()">🗑️ Limpar Tudo</button>
+            <button onclick="location.reload()">🔄 Recarregar</button>
+            <div id="storageStatus" class="log">Clique em "Verificar localStorage" para ver os dados...</div>
+        </div>
+        
+        <div class="section">
+            <h2>✍️ TESTE DE SALVAMENTO</h2>
+            <p>Preencha os dados abaixo e clique em "Salvar Teste":</p>
+            
+            <label>Local:</label>
+            <select id="testLocation" style="width: 100%; padding: 10px; margin: 5px 0; background: #2a2a2a; border: 2px solid #00ff00; color: #00ff00;">
+                <option value="hvs">Hospital Vila da Serra</option>
+                <option value="oncobio">ONCOBIO</option>
+            </select>
+            
+            <label>CRM:</label>
+            <input type="text" id="testCrm" value="TESTE-123" />
+            
+            <label>Nome:</label>
+            <input type="text" id="testName" value="Dr. Teste Debug" />
+            
+            <label>Especialidade:</label>
+            <input type="text" id="testSpecialty" value="Debug" />
+            
+            <label>Telefone:</label>
+            <input type="text" id="testPhone" value="(31) 99999-9999" />
+            
+            <button onclick="testSave()">💾 Salvar Teste</button>
+            
+            <div id="saveLog" class="log">Logs de salvamento aparecerão aqui...</div>
+        </div>
+        
+        <div class="section">
+            <h2>📋 LISTA DE REGISTROS</h2>
+            <div id="recordsList" class="log">Nenhum registro ainda...</div>
+        </div>
+        
+        <div class="section">
+            <h2>🔗 LINKS DO SISTEMA</h2>
+            <p>Formulário: <a href="/" style="color: #00ff00;">https://jeanlucan34-coder.github.io/estacionamento-hospital/</a></p>
+            <p>Painel Admin: <a href="/admin.html" style="color: #00ff00;">https://jeanlucan34-coder.github.io/estacionamento-hospital/admin.html</a></p>
+            <p>Esta página: <a href="/debug.html" style="color: #00ff00;">https://jeanlucan34-coder.github.io/estacionamento-hospital/debug.html</a></p>
+        </div>
+        
+        <div class="section">
+            <h2>📖 INSTRUÇÕES DE TESTE</h2>
+            <div class="log success">
+PASSO A PASSO PARA TESTAR:
+
+1. Clique em "Verificar localStorage" acima
+   → Se mostrar "Nenhum dado", está vazio (normal no início)
+   
+2. Clique em "Salvar Teste"
+   → Deve aparecer "✅ SUCESSO!"
+   → Deve mostrar o registro salvo
+   
+3. Clique em "Verificar localStorage" novamente
+   → Agora deve mostrar 1 registro
+   
+4. Abra o PAINEL ADMIN em outra aba
+   → Deve aparecer o registro lá também
+   
+5. Se funcionou até aqui, teste o FORMULÁRIO:
+   → Abra o formulário em outra aba
+   → Preencha e envie
+   → Volte aqui e clique "Verificar localStorage"
+   → Deve aparecer mais 1 registro
+
+Se qualquer passo falhar, me envie um print da tela!
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function log(message, type = 'log') {
+            console.log(message);
+            return `<div class="${type}">${message}</div>`;
+        }
+
+        function checkStorage() {
+            const statusDiv = document.getElementById('storageStatus');
+            const listDiv = document.getElementById('recordsList');
+            
+            try {
+                const data = localStorage.getItem('parkingData');
+                
+                if (!data) {
+                    statusDiv.innerHTML = log('⚠️ NENHUM DADO ENCONTRADO no localStorage', 'warning');
+                    listDiv.innerHTML = log('Nenhum registro ainda...', 'warning');
+                    return;
+                }
+                
+                const parkingData = JSON.parse(data);
+                const history = parkingData.history || [];
+                
+                let status = '';
+                status += log('✅ DADOS ENCONTRADOS!', 'success');
+                status += log(`\nTotal de registros: ${history.length}`, 'success');
+                status += log(`Hospital Vila da Serra: ${history.filter(h => h.location === 'hvs').length}`, 'success');
+                status += log(`ONCOBIO: ${history.filter(h => h.location === 'oncobio').length}`, 'success');
+                status += log(`\nTamanho dos dados: ${data.length} caracteres`, 'success');
+                status += log(`Verificado em: ${new Date().toLocaleString('pt-BR')}`, 'success');
+                
+                statusDiv.innerHTML = status;
+                
+                // Mostrar lista
+                if (history.length === 0) {
+                    listDiv.innerHTML = log('Histórico vazio (sem registros)', 'warning');
+                } else {
+                    let list = log(`📋 LISTA DE REGISTROS (${history.length} total):\n`, 'success');
+                    history.forEach((record, i) => {
+                        list += log(`\n#${i + 1}
+CRM: ${record.crm}
+Nome: ${record.name}
+Especialidade: ${record.specialty}
+Local: ${record.location === 'hvs' ? 'Hospital Vila da Serra' : 'ONCOBIO'}
+Data: ${new Date(record.exitTime).toLocaleString('pt-BR')}
+─────────────────────────────────`, 'success');
+                    });
+                    listDiv.innerHTML = list;
+                }
+                
+            } catch (error) {
+                statusDiv.innerHTML = log(`❌ ERRO: ${error.message}`, 'error');
+                listDiv.innerHTML = log(`❌ ERRO ao listar: ${error.message}`, 'error');
+            }
+        }
+
+        function testSave() {
+            const logDiv = document.getElementById('saveLog');
+            logDiv.innerHTML = log('🔄 Iniciando salvamento...', 'log');
+            
+            try {
+                // Coletar dados do formulário
+                const testData = {
+                    location: document.getElementById('testLocation').value,
+                    crm: document.getElementById('testCrm').value,
+                    name: document.getElementById('testName').value,
+                    specialty: document.getElementById('testSpecialty').value,
+                    phone: document.getElementById('testPhone').value
+                };
+                
+                logDiv.innerHTML += log(`\n📝 Dados coletados: ${JSON.stringify(testData, null, 2)}`, 'log');
+                
+                // Buscar dados existentes
+                let parkingData = localStorage.getItem('parkingData');
+                logDiv.innerHTML += log(`\n🔍 localStorage atual: ${parkingData ? 'Existe' : 'Vazio'}`, 'log');
+                
+                if (parkingData) {
+                    parkingData = JSON.parse(parkingData);
+                    logDiv.innerHTML += log(`\n📊 Registros antes: ${parkingData.history.length}`, 'log');
+                } else {
+                    parkingData = {
+                        vehicles: { hvs: [], oncobio: [] },
+                        history: []
+                    };
+                    logDiv.innerHTML += log('\n🆕 Criando estrutura nova', 'log');
+                }
+                
+                // Criar registro
+                const now = new Date();
+                const record = {
+                    id: Date.now(),
+                    location: testData.location,
+                    crm: testData.crm,
+                    name: testData.name,
+                    specialty: testData.specialty,
+                    phone: testData.phone,
+                    exitTime: now.toISOString(),
+                    entryTime: now.toISOString(),
+                    duration: 0
+                };
+                
+                logDiv.innerHTML += log(`\n📄 Registro criado: ${JSON.stringify(record, null, 2)}`, 'log');
+                
+                // Adicionar ao histórico
+                parkingData.history.push(record);
+                logDiv.innerHTML += log(`\n➕ Adicionado ao histórico`, 'log');
+                logDiv.innerHTML += log(`📊 Total agora: ${parkingData.history.length}`, 'log');
+                
+                // Salvar
+                const dataString = JSON.stringify(parkingData);
+                localStorage.setItem('parkingData', dataString);
+                logDiv.innerHTML += log(`\n💾 Salvo no localStorage (${dataString.length} caracteres)`, 'log');
+                
+                // Verificar
+                const verificacao = localStorage.getItem('parkingData');
+                const verificacaoData = JSON.parse(verificacao);
+                logDiv.innerHTML += log(`\n✅ VERIFICAÇÃO: ${verificacaoData.history.length} registros no localStorage`, 'success');
+                logDiv.innerHTML += log(`\n✅ SUCESSO! Registro salvo com ID: ${record.id}`, 'success');
+                
+                // Atualizar lista
+                checkStorage();
+                
+            } catch (error) {
+                logDiv.innerHTML += log(`\n❌ ERRO: ${error.message}`, 'error');
+                logDiv.innerHTML += log(`\nStack: ${error.stack}`, 'error');
+            }
+        }
+
+        function clearStorage() {
+            if (confirm('⚠️ Tem certeza que deseja limpar TODOS os dados?')) {
+                localStorage.clear();
+                alert('🗑️ Dados apagados!');
+                checkStorage();
+            }
+        }
+
+        // Verificar ao carregar
+        window.addEventListener('load', function() {
+            console.log('🚀 Página de debug carregada');
+            checkStorage();
+            
+            // Atualizar automaticamente a cada 3 segundos
+            setInterval(function() {
+                console.log('🔄 Auto-atualização...');
+                checkStorage();
+            }, 3000);
+        });
+    </script>
+</body>
+</html>
