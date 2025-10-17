@@ -104,43 +104,6 @@
             transform: translateY(0);
         }
 
-        .alert {
-            padding: 15px;
-            border-radius: 10px;
-            margin-bottom: 20px;
-            font-weight: 600;
-            animation: slideDown 0.3s ease-out;
-        }
-
-        @keyframes slideDown {
-            from {
-                opacity: 0;
-                transform: translateY(-10px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        .alert-success {
-            background: #d4edda;
-            color: #155724;
-            border-left: 4px solid #28a745;
-        }
-
-        .alert-warning {
-            background: #fff3cd;
-            color: #856404;
-            border-left: 4px solid #ffc107;
-        }
-
-        .alert-danger {
-            background: #f8d7da;
-            color: #721c24;
-            border-left: 4px solid #dc3545;
-        }
-
         .modal {
             display: none;
             position: fixed;
@@ -170,7 +133,7 @@
         }
 
         .confirmation-box {
-            background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
+            background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
             color: white;
             padding: 40px;
             border-radius: 15px;
@@ -179,7 +142,7 @@
 
         .confirmation-box h2 {
             color: white;
-            font-size: 2em;
+            font-size: 2.5em;
             margin-bottom: 20px;
         }
 
@@ -199,12 +162,34 @@
         }
 
         .confirmation-info strong {
-            color: #11998e;
+            color: #28a745;
+        }
+
+        .liberation-badge {
+            background: white;
+            color: #28a745;
+            padding: 25px;
+            border-radius: 15px;
+            margin: 25px 0;
+            border: 4px solid white;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .liberation-badge h3 {
+            font-size: 2em;
+            margin-bottom: 10px;
+            color: #28a745;
+        }
+
+        .liberation-badge p {
+            font-size: 1.3em;
+            font-weight: bold;
+            color: #155724;
         }
 
         .btn-print {
             background: white;
-            color: #11998e;
+            color: #28a745;
             padding: 15px 40px;
             border: none;
             border-radius: 10px;
@@ -255,8 +240,6 @@
                 <h1>Registro de Saída</h1>
                 <p class="subtitle">Estacionamento Hospitalar</p>
             </div>
-            
-            <div id="alertArea"></div>
 
             <form id="exitForm">
                 <div class="form-group">
@@ -301,14 +284,19 @@
     <div id="confirmationModal" class="modal">
         <div class="modal-content">
             <div class="confirmation-box">
-                <h2>✓ Saída Registrada com Sucesso!</h2>
+                <h2>✓ Registro Confirmado!</h2>
+                
+                <div class="liberation-badge">
+                    <h3>🎫 ESTACIONAMENTO LIBERADO</h3>
+                    <p>Apresente ao estacionamento</p>
+                </div>
                 
                 <div class="confirmation-info" id="confirmationInfo">
                     <!-- Será preenchido via JavaScript -->
                 </div>
                 
                 <p style="margin: 25px 0; font-size: 1.2em;">
-                    <strong>📋 Apresente este comprovante ao estacionamento</strong>
+                    <strong>Vaga autorizada pela Diretoria</strong>
                 </p>
                 
                 <button class="btn-print" onclick="window.print()">🖨️ Imprimir Comprovante</button>
@@ -318,33 +306,6 @@
     </div>
 
     <script>
-        // Usar localStorage para sincronizar com o sistema administrativo
-        function getVehicles() {
-            const data = localStorage.getItem('parkingData');
-            if (data) {
-                const parsed = JSON.parse(data);
-                return parsed.vehicles || { hvs: [], oncobio: [] };
-            }
-            return { hvs: [], oncobio: [] };
-        }
-
-        function getHistory() {
-            const data = localStorage.getItem('parkingData');
-            if (data) {
-                const parsed = JSON.parse(data);
-                return parsed.history || [];
-            }
-            return [];
-        }
-
-        function saveData(vehicles, history) {
-            const data = {
-                vehicles: vehicles,
-                history: history
-            };
-            localStorage.setItem('parkingData', JSON.stringify(data));
-        }
-
         document.getElementById('exitForm').addEventListener('submit', function(e) {
             e.preventDefault();
             
@@ -354,86 +315,61 @@
             const specialty = document.getElementById('specialty').value;
             const phone = document.getElementById('phone').value;
 
-            const vehicles = getVehicles();
-            const history = getHistory();
-
-            // Buscar veículo
-            const vehicleIndex = vehicles[location].findIndex(v => v.crm === crm);
-            
-            if (vehicleIndex === -1) {
-                showAlert('CRM não encontrado no estacionamento. Verifique se digitou corretamente ou se já registrou a entrada.', 'warning');
-                return;
-            }
-
-            const vehicle = vehicles[location][vehicleIndex];
-            
-            // Criar registro de saída
-            const exitTime = new Date();
-            const entryTime = new Date(vehicle.entryTime);
-            const duration = Math.ceil((exitTime - entryTime) / (1000 * 60));
-
-            const historyEntry = {
-                ...vehicle,
-                location: location,
-                exitTime: exitTime,
-                duration: duration
-            };
-
-            history.push(historyEntry);
-            vehicles[location].splice(vehicleIndex, 1);
-            
-            // Salvar dados
-            saveData(vehicles, history);
+            // Salvar no histórico (localStorage)
+            saveToHistory(location, crm, name, specialty, phone);
             
             // Mostrar comprovante
-            showConfirmation(name, crm, specialty, location, entryTime, exitTime, duration);
+            showConfirmation(name, crm, specialty, phone, location);
         });
 
-        function showAlert(message, type) {
-            const alertArea = document.getElementById('alertArea');
-            const alertClass = type === 'success' ? 'alert-success' : 
-                              (type === 'danger' ? 'alert-danger' : 'alert-warning');
-            
-            alertArea.innerHTML = `<div class="alert ${alertClass}">${message}</div>`;
-            
-            setTimeout(() => {
-                alertArea.innerHTML = '';
-            }, 5000);
+        function saveToHistory(location, crm, name, specialty, phone) {
+            try {
+                const data = localStorage.getItem('parkingData');
+                let parkingData = data ? JSON.parse(data) : { vehicles: { hvs: [], oncobio: [] }, history: [] };
+                
+                const now = new Date();
+                
+                // Adicionar ao histórico
+                const historyEntry = {
+                    location: location,
+                    crm: crm,
+                    name: name,
+                    specialty: specialty,
+                    phone: phone,
+                    exitTime: now,
+                    entryTime: now,
+                    duration: 0
+                };
+                
+                parkingData.history.push(historyEntry);
+                
+                // Salvar
+                localStorage.setItem('parkingData', JSON.stringify(parkingData));
+            } catch (error) {
+                console.log('Erro ao salvar:', error);
+            }
         }
 
-        function showConfirmation(name, crm, specialty, location, entryTime, exitTime, duration) {
+        function showConfirmation(name, crm, specialty, phone, location) {
             const locationName = location === 'hvs' ? 'Hospital Vila da Serra' : 'ONCOBIO - Centro Oncológico';
             
-            const formatDateTime = (date) => {
-                return new Date(date).toLocaleString('pt-BR', { 
-                    day: '2-digit',
-                    month: '2-digit',
-                    year: 'numeric',
-                    hour: '2-digit', 
-                    minute: '2-digit' 
-                });
-            };
-
-            const formatDuration = (minutes) => {
-                const hours = Math.floor(minutes / 60);
-                const mins = minutes % 60;
-                if (hours > 0) {
-                    return `${hours}h ${mins}min`;
-                }
-                return `${mins}min`;
-            };
+            const now = new Date();
+            const dateTime = now.toLocaleString('pt-BR', { 
+                day: '2-digit',
+                month: '2-digit',
+                year: 'numeric',
+                hour: '2-digit', 
+                minute: '2-digit' 
+            });
             
             const confirmationInfo = `
-                <p><strong>Data/Hora da Saída:</strong> ${formatDateTime(exitTime)}</p>
+                <p><strong>Data/Hora:</strong> ${dateTime}</p>
                 <p><strong>Nome:</strong> Dr(a). ${name}</p>
                 <p><strong>CRM:</strong> ${crm}</p>
                 <p><strong>Especialidade:</strong> ${specialty}</p>
-                <p><strong>Tempo de Permanência:</strong> ${formatDuration(duration)}</p>
+                <p><strong>Telefone:</strong> ${phone}</p>
                 <p style="font-size: 1.2em; margin-top: 20px; padding: 15px; background: #fff3cd; border-radius: 8px; color: #856404;">
                     <strong>📍 Local:</strong> ${locationName}
-                </p>
-                <p style="font-size: 1.1em; margin-top: 15px; color: #155724; background: #d4edda; padding: 15px; border-radius: 8px;">
-                    ✓ <strong>Vaga de estacionamento autorizada pela Diretoria</strong>
                 </p>
             `;
             
@@ -444,7 +380,6 @@
         function resetForm() {
             document.getElementById('confirmationModal').classList.remove('active');
             document.getElementById('exitForm').reset();
-            showAlert('Pronto para registrar nova saída!', 'success');
         }
 
         // Máscara de telefone
