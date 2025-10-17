@@ -63,6 +63,38 @@
             color: white;
         }
 
+        .reload-btn {
+            padding: 12px 25px;
+            background: #28a745;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 16px;
+            transition: all 0.3s;
+        }
+
+        .reload-btn:hover {
+            background: #218838;
+            transform: scale(1.05);
+        }
+
+        .debug-info {
+            background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%);
+            border: 2px solid #2196f3;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 15px 0;
+            font-family: monospace;
+            font-size: 1em;
+            line-height: 1.8;
+        }
+
+        .debug-info strong {
+            color: #1565c0;
+        }
+
         .stats-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
@@ -89,39 +121,7 @@
             font-size: 3em;
             font-weight: bold;
             margin-bottom: 10px;
-        }
-
-        .stat-card.hvs .stat-number {
-            color: #667eea;
-        }
-
-        .stat-card.oncobio .stat-number {
-            color: #11998e;
-        }
-
-        .stat-card.info .stat-number {
             color: #17a2b8;
-        }
-
-        .progress-bar {
-            width: 100%;
-            height: 10px;
-            background: #e0e0e0;
-            border-radius: 5px;
-            overflow: hidden;
-        }
-
-        .progress-fill {
-            height: 100%;
-            transition: width 0.3s;
-        }
-
-        .hvs .progress-fill {
-            background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
-        }
-
-        .oncobio .progress-fill {
-            background: linear-gradient(90deg, #11998e 0%, #38ef7d 100%);
         }
 
         .content-section {
@@ -132,18 +132,12 @@
             display: block;
         }
 
-        .main-grid {
-            display: grid;
-            grid-template-columns: 1fr 2fr;
-            gap: 20px;
-            margin-bottom: 20px;
-        }
-
         .card {
             background: white;
             padding: 30px;
             border-radius: 15px;
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            margin-bottom: 20px;
         }
 
         h2 {
@@ -152,84 +146,38 @@
             font-size: 1.5em;
         }
 
-        h3 {
-            color: #0f2027;
-            margin-bottom: 15px;
-            font-size: 1.2em;
-        }
-
         .info-section {
-            background: #e7f3ff;
-            border-left: 4px solid #0066cc;
+            background: #fff3cd;
+            border-left: 4px solid #ffc107;
             padding: 20px;
             border-radius: 8px;
             margin-bottom: 20px;
         }
 
         .info-section p {
-            color: #004085;
+            color: #856404;
             line-height: 1.6;
             margin: 5px 0;
         }
 
-        .form-group {
-            margin-bottom: 20px;
-        }
-
-        label {
-            display: block;
-            margin-bottom: 8px;
-            color: #333;
-            font-weight: 600;
-        }
-
-        input, select {
-            width: 100%;
-            padding: 12px;
-            border: 2px solid #e0e0e0;
-            border-radius: 8px;
-            font-size: 16px;
-            transition: border-color 0.3s;
-        }
-
-        input:focus, select:focus {
-            outline: none;
-            border-color: #667eea;
-        }
-
-        .btn {
-            width: 100%;
-            padding: 15px;
-            border: none;
-            border-radius: 8px;
-            font-size: 16px;
-            font-weight: bold;
-            cursor: pointer;
-            transition: all 0.3s;
-            color: white;
-        }
-
-        .btn-primary {
-            background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
-        }
-
-        .btn:hover {
-            transform: scale(1.02);
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
-        }
-
         .vehicle-list {
-            max-height: 500px;
+            max-height: 600px;
             overflow-y: auto;
         }
 
-        .vehicle-item {
+        .history-item {
             background: #f8f9fa;
-            padding: 15px;
-            margin-bottom: 10px;
-            border-radius: 8px;
-            border-left: 4px solid #667eea;
+            padding: 18px;
+            margin-bottom: 12px;
+            border-radius: 10px;
+            border-left: 5px solid #28a745;
             animation: slideIn 0.3s ease-out;
+            transition: all 0.3s;
+        }
+
+        .history-item:hover {
+            transform: translateX(5px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
         }
 
         @keyframes slideIn {
@@ -258,133 +206,21 @@
 
         .vehicle-info {
             color: #666;
-            font-size: 0.9em;
-            margin: 3px 0;
-        }
-
-        .btn-exit {
-            padding: 8px 20px;
-            background: #28a745;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            font-size: 14px;
-            font-weight: bold;
-            transition: all 0.3s;
-        }
-
-        .btn-exit:hover {
-            background: #218838;
-            transform: scale(1.05);
-        }
-
-        .btn-add {
-            padding: 10px 25px;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            border: none;
-            border-radius: 8px;
-            cursor: pointer;
-            font-size: 14px;
-            font-weight: bold;
-            transition: all 0.3s;
-        }
-
-        .btn-add:hover {
-            transform: scale(1.05);
+            font-size: 0.95em;
+            margin: 5px 0;
         }
 
         .empty-state {
             text-align: center;
-            padding: 60px 20px;
+            padding: 80px 20px;
             color: #999;
         }
 
-        .modal {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.7);
-            z-index: 1000;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .modal.active {
-            display: flex;
-        }
-
-        .modal-content {
-            background: white;
-            padding: 30px;
-            border-radius: 15px;
-            max-width: 500px;
-            width: 90%;
-            max-height: 90vh;
-            overflow-y: auto;
-        }
-
-        .modal-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
+        .empty-state svg {
+            width: 100px;
+            height: 100px;
             margin-bottom: 20px;
-        }
-
-        .close-btn {
-            background: #dc3545;
-            color: white;
-            border: none;
-            width: 30px;
-            height: 30px;
-            border-radius: 50%;
-            cursor: pointer;
-            font-size: 18px;
-            font-weight: bold;
-        }
-
-        .ranking-item {
-            background: #f8f9fa;
-            padding: 15px;
-            margin-bottom: 10px;
-            border-radius: 8px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            border-left: 4px solid #667eea;
-        }
-
-        .ranking-position {
-            font-size: 1.5em;
-            font-weight: bold;
-            color: #667eea;
-            width: 40px;
-        }
-
-        .ranking-info {
-            flex: 1;
-            margin-left: 15px;
-        }
-
-        .ranking-name {
-            font-weight: bold;
-            color: #0f2027;
-            margin-bottom: 5px;
-        }
-
-        .ranking-details {
-            font-size: 0.85em;
-            color: #666;
-        }
-
-        .ranking-count {
-            font-size: 1.5em;
-            font-weight: bold;
-            color: #28a745;
+            opacity: 0.3;
         }
 
         .filter-tabs {
@@ -395,7 +231,7 @@
         }
 
         .filter-btn {
-            padding: 10px 20px;
+            padding: 12px 25px;
             border: 2px solid #667eea;
             background: white;
             color: #667eea;
@@ -411,24 +247,17 @@
             color: white;
         }
 
-        .history-item {
-            background: #f8f9fa;
-            padding: 15px;
-            margin-bottom: 10px;
-            border-radius: 8px;
-            border-left: 4px solid #28a745;
-        }
-
-        .report-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 20px;
-            margin-bottom: 20px;
+        .filter-btn:hover {
+            transform: scale(1.05);
         }
 
         @media (max-width: 968px) {
-            .main-grid {
-                grid-template-columns: 1fr;
+            .tabs {
+                flex-direction: column;
+            }
+            
+            .tab-btn, .reload-btn {
+                width: 100%;
             }
         }
     </style>
@@ -436,73 +265,39 @@
 <body>
     <div class="container">
         <header>
-            <h1>🚗 Painel Administrativo - Estacionamento</h1>
+            <h1>🚗 Painel Administrativo</h1>
+            <p style="text-align: center; color: #666; margin-bottom: 20px;">Sistema de Controle de Estacionamento</p>
             
             <div class="tabs">
-                <button class="tab-btn active" onclick="switchTab('admin')">Painel Principal</button>
-                <button class="tab-btn" onclick="switchTab('reports')">Relatórios e Indicadores</button>
+                <button class="tab-btn active" onclick="switchTab('admin')">📊 Visão Geral</button>
+                <button class="tab-btn" onclick="switchTab('reports')">📈 Relatórios Detalhados</button>
+                <button class="reload-btn" onclick="forceReload()">🔄 Atualizar Agora</button>
             </div>
         </header>
 
         <!-- ADMIN SECTION -->
         <div id="admin-section" class="content-section active">
-            <div class="stats-grid">
-                <div class="stat-card hvs">
-                    <h3>Hospital Vila da Serra</h3>
-                    <div class="stat-number" id="hvsOccupied">0</div>
-                    <p style="color: #666; margin-bottom: 10px;"><span id="hvsAvailable">50</span> de 50 disponíveis</p>
-                    <div class="progress-bar">
-                        <div class="progress-fill" id="hvsProgress" style="width: 0%"></div>
-                    </div>
-                </div>
-
-                <div class="stat-card oncobio">
-                    <h3>ONCOBIO - Centro Oncológico</h3>
-                    <div class="stat-number" id="oncobioOccupied">0</div>
-                    <p style="color: #666; margin-bottom: 10px;"><span id="oncobioAvailable">12</span> de 12 disponíveis</p>
-                    <div class="progress-bar">
-                        <div class="progress-fill" id="oncobioProgress" style="width: 0%"></div>
-                    </div>
+            <div class="card">
+                <h2>📊 Status do Sistema em Tempo Real</h2>
+                <div class="debug-info" id="debugInfo">
+                    <strong>⏳ Carregando dados do sistema...</strong>
                 </div>
             </div>
 
-            <div class="main-grid">
-                <div class="card">
-                    <h2>Acesso Rápido</h2>
-                    
-                    <div class="info-section">
-                        <p><strong>📱 Link para Médicos:</strong></p>
-                        <p style="word-break: break-all; font-size: 0.9em; margin-top: 10px;">
-                            https://jeanlucan34-coder.github.io/estacionamento-hospital/
-                        </p>
-                    </div>
-
-                    <button class="btn-add" style="width: 100%; margin-bottom: 15px;" onclick="openAddModal('hvs')">
-                        + Adicionar no Hospital Vila da Serra
-                    </button>
-                    
-                    <button class="btn-add" style="width: 100%;" onclick="openAddModal('oncobio')">
-                        + Adicionar no ONCOBIO
-                    </button>
+            <div class="card">
+                <h2>📋 Últimos 10 Registros</h2>
+                <div class="info-section">
+                    <p><strong>ℹ️ Como funciona:</strong></p>
+                    <p>• Quando médicos preenchem o formulário pelo QR Code, os registros aparecem aqui</p>
+                    <p>• Os dados são atualizados automaticamente a cada 5 segundos</p>
+                    <p>• Você também pode clicar em "🔄 Atualizar Agora" para forçar a atualização</p>
                 </div>
-
-                <div class="card">
-                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
-                        <h2 style="margin: 0;">Hospital Vila da Serra (50 vagas)</h2>
-                    </div>
-                    <div class="vehicle-list" id="hvsVehicleList">
-                        <div class="empty-state">
-                            <p>Nenhum médico estacionado</p>
-                        </div>
-                    </div>
-
-                    <div style="display: flex; justify-content: space-between; align-items: center; margin: 30px 0 15px 0;">
-                        <h2 style="margin: 0;">ONCOBIO - Centro Oncológico (12 vagas)</h2>
-                    </div>
-                    <div class="vehicle-list" id="oncobioVehicleList">
-                        <div class="empty-state">
-                            <p>Nenhum médico estacionado</p>
-                        </div>
+                <div class="vehicle-list" id="recentList">
+                    <div class="empty-state">
+                        <svg fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M9 11H7v2h2v-2zm4 0h-2v2h2v-2zm4 0h-2v2h2v-2zm2-7h-1V2h-2v2H8V2H6v2H5c-1.11 0-1.99.9-1.99 2L3 20c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 16H5V9h14v11z"/>
+                        </svg>
+                        <p>Aguardando registros...</p>
                     </div>
                 </div>
             </div>
@@ -511,97 +306,105 @@
         <!-- REPORTS SECTION -->
         <div id="reports-section" class="content-section">
             <div class="filter-tabs">
-                <button class="filter-btn active" onclick="changeReportFilter('today')">Hoje</button>
-                <button class="filter-btn" onclick="changeReportFilter('week')">Esta Semana</button>
-                <button class="filter-btn" onclick="changeReportFilter('month')">Este Mês</button>
-                <button class="filter-btn" onclick="changeReportFilter('all')">Todo Período</button>
+                <button class="filter-btn active" onclick="changeReportFilter('today')">📅 Hoje</button>
+                <button class="filter-btn" onclick="changeReportFilter('week')">📅 Esta Semana</button>
+                <button class="filter-btn" onclick="changeReportFilter('month')">📅 Este Mês</button>
+                <button class="filter-btn" onclick="changeReportFilter('all')">📅 Todo Período</button>
             </div>
 
             <div class="stats-grid">
-                <div class="stat-card info">
+                <div class="stat-card">
                     <h3>Total de Utilizações</h3>
                     <div class="stat-number" id="reportTotalUses">0</div>
                     <p style="color: #666;">no período selecionado</p>
                 </div>
-                <div class="stat-card hvs">
+                <div class="stat-card">
                     <h3>Hospital Vila da Serra</h3>
-                    <div class="stat-number" id="reportHvsUses">0</div>
-                    <p style="color: #666;">no período selecionado</p>
+                    <div class="stat-number" id="reportHvsUses" style="color: #667eea;">0</div>
+                    <p style="color: #666;">utilizações</p>
                 </div>
-                <div class="stat-card oncobio">
-                    <h3>Utilizações ONCOBIO</h3>
-                    <div class="stat-number" id="reportOncobioUses">0</div>
-                    <p style="color: #666;">no período selecionado</p>
-                </div>
-                <div class="stat-card info">
-                    <h3>Média Diária</h3>
-                    <div class="stat-number" id="reportAverage">0</div>
-                    <p style="color: #666;">utilizações por dia</p>
-                </div>
-            </div>
-
-            <div class="report-grid">
-                <div class="card">
-                    <h2>🏆 Top 10 - Médicos que Mais Utilizam</h2>
-                    <div id="rankingList"></div>
-                </div>
-
-                <div class="card">
-                    <h2>📊 Estatísticas por Especialidade</h2>
-                    <div id="specialtyStats"></div>
+                <div class="stat-card">
+                    <h3>ONCOBIO</h3>
+                    <div class="stat-number" id="reportOncobioUses" style="color: #11998e;">0</div>
+                    <p style="color: #666;">utilizações</p>
                 </div>
             </div>
 
             <div class="card">
-                <h2>📋 Histórico de Utilizações</h2>
-                <div class="vehicle-list" id="historyList"></div>
+                <h2>📋 Histórico Completo - <span id="periodLabel">Todo Período</span></h2>
+                <div class="vehicle-list" id="historyList">
+                    <div class="empty-state">
+                        <p>Nenhum registro no período selecionado</p>
+                    </div>
+                </div>
             </div>
-        </div>
-    </div>
-
-    <!-- Modal para adicionar entrada -->
-    <div id="addModal" class="modal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h2 style="margin: 0;">Registrar Entrada de Médico</h2>
-                <button class="close-btn" onclick="closeAddModal()">&times;</button>
-            </div>
-            <form id="addForm">
-                <div class="form-group">
-                    <label>CRM *</label>
-                    <input type="text" id="addCrm" required>
-                </div>
-                <div class="form-group">
-                    <label>Nome do Médico *</label>
-                    <input type="text" id="addName" required>
-                </div>
-                <div class="form-group">
-                    <label>Especialidade *</label>
-                    <input type="text" id="addSpecialty" required>
-                </div>
-                <div class="form-group">
-                    <label>Telefone *</label>
-                    <input type="tel" id="addPhone" required>
-                </div>
-                <button type="submit" class="btn btn-primary">Registrar Entrada</button>
-            </form>
         </div>
     </div>
 
     <script>
-        const LIMITS = {
-            hvs: 50,
-            oncobio: 12
-        };
-
-        let vehicles = {
-            hvs: [],
-            oncobio: []
-        };
-
-        let history = [];
-        let currentModalLocation = '';
         let currentReportFilter = 'today';
+        let history = [];
+
+        function loadData() {
+            try {
+                const data = localStorage.getItem('parkingData');
+                
+                if (data) {
+                    const parkingData = JSON.parse(data);
+                    history = parkingData.history || [];
+                    
+                    // Converter strings de data para objetos Date
+                    history = history.map(h => ({
+                        ...h,
+                        entryTime: new Date(h.entryTime),
+                        exitTime: new Date(h.exitTime)
+                    }));
+                    
+                    console.log('✅ Dados carregados:', history.length, 'registros');
+                    updateDebugInfo();
+                    updateDisplay();
+                    updateReports();
+                } else {
+                    console.log('⚠️ Nenhum dado encontrado no localStorage');
+                    updateDebugInfo('Nenhum dado salvo ainda');
+                }
+            } catch (error) {
+                console.error('❌ Erro ao carregar dados:', error);
+                updateDebugInfo('ERRO: ' + error.message);
+            }
+        }
+
+        function updateDebugInfo(errorMessage) {
+            const total = history.length;
+            const hvs = history.filter(h => h.location === 'hvs').length;
+            const oncobio = history.filter(h => h.location === 'oncobio').length;
+            
+            const now = new Date().toLocaleTimeString('pt-BR');
+            
+            let debugHtml = `
+                <strong>📊 ESTATÍSTICAS TOTAIS:</strong><br><br>
+                ✅ <strong>Total de registros salvos:</strong> ${total}<br>
+                🏥 <strong>Hospital Vila da Serra:</strong> ${hvs} registros<br>
+                🏥 <strong>ONCOBIO:</strong> ${oncobio} registros<br><br>
+                🕐 <strong>Última atualização:</strong> ${now}<br>
+                🔄 <strong>Atualização automática:</strong> A cada 5 segundos
+            `;
+            
+            if (errorMessage) {
+                debugHtml += `<br><br>⚠️ <strong>Aviso:</strong> ${errorMessage}`;
+            }
+            
+            if (total === 0) {
+                debugHtml += `<br><br>💡 <strong>Dica:</strong> Preencha o formulário de registro para ver os dados aparecerem aqui!`;
+            }
+            
+            document.getElementById('debugInfo').innerHTML = debugHtml;
+        }
+
+        function forceReload() {
+            loadData();
+            alert('✅ Dados atualizados!\n\nTotal de registros: ' + history.length);
+        }
 
         function switchTab(tab) {
             document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
@@ -610,6 +413,7 @@
             if (tab === 'admin') {
                 document.querySelectorAll('.tab-btn')[0].classList.add('active');
                 document.getElementById('admin-section').classList.add('active');
+                loadData();
             } else if (tab === 'reports') {
                 document.querySelectorAll('.tab-btn')[1].classList.add('active');
                 document.getElementById('reports-section').classList.add('active');
@@ -617,149 +421,40 @@
             }
         }
 
-        function saveData() {
-            const data = {
-                vehicles: vehicles,
-                history: history
-            };
-            localStorage.setItem('parkingData', JSON.stringify(data));
-        }
-
-        function loadData() {
-            const savedData = localStorage.getItem('parkingData');
-            if (savedData) {
-                const data = JSON.parse(savedData);
-                vehicles = data.vehicles || { hvs: [], oncobio: [] };
-                history = data.history || [];
-                
-                vehicles.hvs = vehicles.hvs.map(v => ({...v, entryTime: new Date(v.entryTime)}));
-                vehicles.oncobio = vehicles.oncobio.map(v => ({...v, entryTime: new Date(v.entryTime)}));
-                history = history.map(h => ({
-                    ...h, 
-                    entryTime: new Date(h.entryTime),
-                    exitTime: new Date(h.exitTime)
-                }));
-                
-                updateDisplay();
-                updateReports();
-            }
-        }
-
-        function openAddModal(location) {
-            currentModalLocation = location;
-            document.getElementById('addModal').classList.add('active');
-        }
-
-        function closeAddModal() {
-            document.getElementById('addModal').classList.remove('active');
-            document.getElementById('addForm').reset();
-        }
-
-        document.getElementById('addForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            
-            const crm = document.getElementById('addCrm').value;
-            const name = document.getElementById('addName').value;
-            const specialty = document.getElementById('addSpecialty').value;
-            const phone = document.getElementById('addPhone').value;
-
-            if (vehicles[currentModalLocation].length >= LIMITS[currentModalLocation]) {
-                alert('Estacionamento lotado!');
-                return;
-            }
-
-            const vehicle = {
-                id: Date.now(),
-                crm: crm,
-                name: name,
-                specialty: specialty,
-                phone: phone,
-                entryTime: new Date()
-            };
-
-            vehicles[currentModalLocation].push(vehicle);
-            saveData();
-            updateDisplay();
-            closeAddModal();
-            alert('Entrada registrada com sucesso!');
-        });
-
-        function exitVehicle(location, id) {
-            const vehicle = vehicles[location].find(v => v.id === id);
-            if (vehicle && confirm(`Confirmar saída do Dr(a). ${vehicle.name} (CRM: ${vehicle.crm})?`)) {
-                const historyEntry = {
-                    ...vehicle,
-                    location: location,
-                    exitTime: new Date(),
-                    duration: Math.ceil((new Date() - vehicle.entryTime) / (1000 * 60))
-                };
-                
-                history.push(historyEntry);
-                vehicles[location] = vehicles[location].filter(v => v.id !== id);
-                saveData();
-                updateDisplay();
-            }
-        }
-
-        function formatTime(date) {
-            return date.toLocaleString('pt-BR', { 
-                day: '2-digit',
-                month: '2-digit',
-                hour: '2-digit', 
-                minute: '2-digit' 
-            });
-        }
-
-        function formatDuration(minutes) {
-            const hours = Math.floor(minutes / 60);
-            const mins = minutes % 60;
-            if (hours > 0) {
-                return `${hours}h ${mins}min`;
-            }
-            return `${mins}min`;
-        }
-
         function updateDisplay() {
-            const hvsOccupied = vehicles.hvs.length;
-            const hvsAvailable = LIMITS.hvs - hvsOccupied;
-            const hvsPercent = (hvsOccupied / LIMITS.hvs) * 100;
-
-            document.getElementById('hvsOccupied').textContent = hvsOccupied;
-            document.getElementById('hvsAvailable').textContent = hvsAvailable;
-            document.getElementById('hvsProgress').style.width = hvsPercent + '%';
-
-            const oncobioOccupied = vehicles.oncobio.length;
-            const oncobioAvailable = LIMITS.oncobio - oncobioOccupied;
-            const oncobioPercent = (oncobioOccupied / LIMITS.oncobio) * 100;
-
-            document.getElementById('oncobioOccupied').textContent = oncobioOccupied;
-            document.getElementById('oncobioAvailable').textContent = oncobioAvailable;
-            document.getElementById('oncobioProgress').style.width = oncobioPercent + '%';
-
-            updateVehicleList('hvs', 'hvsVehicleList');
-            updateVehicleList('oncobio', 'oncobioVehicleList');
-        }
-
-        function updateVehicleList(location, elementId) {
-            const list = document.getElementById(elementId);
+            const recentList = document.getElementById('recentList');
             
-            if (vehicles[location].length === 0) {
-                list.innerHTML = '<div class="empty-state"><p>Nenhum médico estacionado</p></div>';
+            if (history.length === 0) {
+                recentList.innerHTML = `
+                    <div class="empty-state">
+                        <svg fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M9 11H7v2h2v-2zm4 0h-2v2h2v-2zm4 0h-2v2h2v-2zm2-7h-1V2h-2v2H8V2H6v2H5c-1.11 0-1.99.9-1.99 2L3 20c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 16H5V9h14v11z"/>
+                        </svg>
+                        <p><strong>Nenhum registro ainda</strong></p>
+                        <p style="margin-top: 10px;">Aguardando preenchimentos do formulário...</p>
+                    </div>
+                `;
             } else {
-                list.innerHTML = vehicles[location].map(vehicle => `
-                    <div class="vehicle-item">
+                const recent = [...history].sort((a, b) => b.exitTime - a.exitTime).slice(0, 10);
+                
+                recentList.innerHTML = recent.map((record, index) => `
+                    <div class="history-item">
                         <div class="vehicle-header">
                             <div>
-                                <div class="vehicle-plate">CRM: ${vehicle.crm}</div>
-                                <div class="vehicle-info">👨‍⚕️ Dr(a). ${vehicle.name}</div>
+                                <div class="vehicle-plate">#${index + 1} - CRM: ${record.crm}</div>
+                                <div class="vehicle-info" style="font-size: 1.1em; font-weight: 600; color: #333;">
+                                    👨‍⚕️ Dr(a). ${record.name}
+                                </div>
                             </div>
-                            <button class="btn-exit" onclick="exitVehicle('${location}', ${vehicle.id})">
-                                Registrar Saída
-                            </button>
+                            <div style="text-align: right;">
+                                <div style="font-weight: bold; color: ${record.location === 'hvs' ? '#667eea' : '#11998e'}; font-size: 1.1em;">
+                                    ${record.location === 'hvs' ? '🏥 Hospital Vila da Serra' : '🏥 ONCOBIO'}
+                                </div>
+                            </div>
                         </div>
-                        <div class="vehicle-info">🩺 ${vehicle.specialty}</div>
-                        <div class="vehicle-info">📞 ${vehicle.phone}</div>
-                        <div class="vehicle-info">🕐 Entrada: ${formatTime(vehicle.entryTime)}</div>
+                        <div class="vehicle-info">🩺 <strong>Especialidade:</strong> ${record.specialty}</div>
+                        <div class="vehicle-info">📞 <strong>Telefone:</strong> ${record.phone}</div>
+                        <div class="vehicle-info">📅 <strong>Data/Hora:</strong> ${formatTime(record.exitTime)}</div>
                     </div>
                 `).join('');
             }
@@ -769,6 +464,15 @@
             currentReportFilter = filter;
             document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
             event.target.classList.add('active');
+            
+            const labels = {
+                'today': 'Hoje',
+                'week': 'Esta Semana',
+                'month': 'Este Mês',
+                'all': 'Todo Período'
+            };
+            document.getElementById('periodLabel').textContent = labels[filter];
+            
             updateReports();
         }
 
@@ -796,139 +500,65 @@
             const totalUses = filteredHistory.length;
             const hvsUses = filteredHistory.filter(h => h.location === 'hvs').length;
             const oncobioUses = filteredHistory.filter(h => h.location === 'oncobio').length;
-            
-            let days = 1;
-            if (currentReportFilter === 'week') days = 7;
-            if (currentReportFilter === 'month') days = new Date().getDate();
-            if (currentReportFilter === 'all' && history.length > 0) {
-                const oldest = new Date(Math.min(...history.map(h => h.exitTime)));
-                days = Math.ceil((new Date() - oldest) / (1000 * 60 * 60 * 24)) || 1;
-            }
-            
-            const average = (totalUses / days).toFixed(1);
 
             document.getElementById('reportTotalUses').textContent = totalUses;
             document.getElementById('reportHvsUses').textContent = hvsUses;
             document.getElementById('reportOncobioUses').textContent = oncobioUses;
-            document.getElementById('reportAverage').textContent = average;
 
-            updateRanking(filteredHistory);
-            updateSpecialtyStats(filteredHistory);
             updateHistoryList(filteredHistory);
-        }
-
-        function updateRanking(filteredHistory) {
-            const rankingMap = {};
-            
-            filteredHistory.forEach(record => {
-                if (!rankingMap[record.crm]) {
-                    rankingMap[record.crm] = {
-                        crm: record.crm,
-                        name: record.name,
-                        specialty: record.specialty,
-                        count: 0
-                    };
-                }
-                rankingMap[record.crm].count++;
-            });
-
-            const ranking = Object.values(rankingMap)
-                .sort((a, b) => b.count - a.count)
-                .slice(0, 10);
-
-            const rankingList = document.getElementById('rankingList');
-            
-            if (ranking.length === 0) {
-                rankingList.innerHTML = '<div class="empty-state"><p>Nenhum dado disponível</p></div>';
-            } else {
-                rankingList.innerHTML = ranking.map((item, index) => `
-                    <div class="ranking-item">
-                        <div class="ranking-position">${index + 1}º</div>
-                        <div class="ranking-info">
-                            <div class="ranking-name">Dr(a). ${item.name}</div>
-                            <div class="ranking-details">CRM: ${item.crm} | ${item.specialty}</div>
-                        </div>
-                        <div class="ranking-count">${item.count}x</div>
-                    </div>
-                `).join('');
-            }
-        }
-
-        function updateSpecialtyStats(filteredHistory) {
-            const specialtyMap = {};
-            
-            filteredHistory.forEach(record => {
-                if (!specialtyMap[record.specialty]) {
-                    specialtyMap[record.specialty] = 0;
-                }
-                specialtyMap[record.specialty]++;
-            });
-
-            const specialtyStats = Object.entries(specialtyMap)
-                .sort((a, b) => b[1] - a[1])
-                .slice(0, 10);
-
-            const specialtyStatsDiv = document.getElementById('specialtyStats');
-            
-            if (specialtyStats.length === 0) {
-                specialtyStatsDiv.innerHTML = '<div class="empty-state"><p>Nenhum dado disponível</p></div>';
-            } else {
-                specialtyStatsDiv.innerHTML = specialtyStats.map(([specialty, count]) => `
-                    <div class="ranking-item">
-                        <div class="ranking-info">
-                            <div class="ranking-name">${specialty}</div>
-                        </div>
-                        <div class="ranking-count">${count}x</div>
-                    </div>
-                `).join('');
-            }
         }
 
         function updateHistoryList(filteredHistory) {
             const historyListDiv = document.getElementById('historyList');
             
             if (filteredHistory.length === 0) {
-                historyListDiv.innerHTML = '<div class="empty-state"><p>Nenhum registro no período</p></div>';
+                historyListDiv.innerHTML = '<div class="empty-state"><p>Nenhum registro no período selecionado</p></div>';
             } else {
                 const sortedHistory = [...filteredHistory].sort((a, b) => b.exitTime - a.exitTime);
-                historyListDiv.innerHTML = sortedHistory.slice(0, 50).map(record => `
+                historyListDiv.innerHTML = sortedHistory.map((record, index) => `
                     <div class="history-item">
                         <div class="vehicle-header">
                             <div>
-                                <div class="vehicle-plate">CRM: ${record.crm} | Dr(a). ${record.name}</div>
-                                <div class="vehicle-info">🩺 ${record.specialty}</div>
+                                <div class="vehicle-plate">#${index + 1} - CRM: ${record.crm}</div>
+                                <div class="vehicle-info" style="font-size: 1.1em; font-weight: 600; color: #333;">
+                                    👨‍⚕️ Dr(a). ${record.name}
+                                </div>
                             </div>
                             <div style="text-align: right;">
-                                <div style="font-weight: bold; color: #667eea;">
-                                    ${record.location === 'hvs' ? 'Hospital Vila da Serra' : 'ONCOBIO'}
-                                </div>
-                                <div style="font-size: 0.85em; color: #666;">
-                                    ${formatDuration(record.duration)}
+                                <div style="font-weight: bold; color: ${record.location === 'hvs' ? '#667eea' : '#11998e'}; font-size: 1.1em;">
+                                    ${record.location === 'hvs' ? '🏥 Hospital Vila da Serra' : '🏥 ONCOBIO'}
                                 </div>
                             </div>
                         </div>
-                        <div class="vehicle-info">📅 ${formatTime(record.entryTime)} → ${formatTime(record.exitTime)}</div>
+                        <div class="vehicle-info">🩺 <strong>Especialidade:</strong> ${record.specialty}</div>
+                        <div class="vehicle-info">📞 <strong>Telefone:</strong> ${record.phone}</div>
+                        <div class="vehicle-info">📅 <strong>Data/Hora:</strong> ${formatTime(record.exitTime)}</div>
                     </div>
                 `).join('');
             }
         }
 
-        document.getElementById('addPhone').addEventListener('input', function(e) {
-            let value = e.target.value.replace(/\D/g, '');
-            if (value.length <= 11) {
-                value = value.replace(/^(\d{2})(\d)/g, '($1) $2');
-                value = value.replace(/(\d)(\d{4})$/, '$1-$2');
-            }
-            e.target.value = value;
-        });
+        function formatTime(date) {
+            return date.toLocaleString('pt-BR', { 
+                day: '2-digit',
+                month: '2-digit',
+                year: 'numeric',
+                hour: '2-digit', 
+                minute: '2-digit' 
+            });
+        }
 
+        // Carregar dados ao iniciar
         window.addEventListener('load', function() {
+            console.log('🚀 Painel iniciado');
             loadData();
-            setInterval(loadData, 5000);
+            
+            // Atualizar automaticamente a cada 5 segundos
+            setInterval(function() {
+                console.log('🔄 Atualização automática...');
+                loadData();
+            }, 5000);
         });
-
-        updateDisplay();
-        updateReports();
     </script>
 </body>
 </html>
