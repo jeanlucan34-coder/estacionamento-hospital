@@ -31,6 +31,18 @@
             padding: 40px;
             border-radius: 20px;
             box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            animation: fadeIn 0.5s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
         .header {
@@ -52,6 +64,21 @@
         .subtitle {
             color: #666;
             font-size: 1.1em;
+            margin-bottom: 20px;
+        }
+
+        .info-box {
+            background: #e7f3ff;
+            border-left: 4px solid #0066cc;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 25px;
+        }
+
+        .info-box p {
+            color: #004085;
+            margin: 0;
+            line-height: 1.6;
         }
 
         .form-group {
@@ -116,6 +143,7 @@
             align-items: center;
             justify-content: center;
             padding: 20px;
+            animation: fadeIn 0.3s ease-out;
         }
 
         .modal.active {
@@ -130,6 +158,18 @@
             width: 100%;
             max-height: 90vh;
             overflow-y: auto;
+            animation: slideUp 0.4s ease-out;
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
         .confirmation-box {
@@ -144,6 +184,38 @@
             color: white;
             font-size: 2.5em;
             margin-bottom: 20px;
+        }
+
+        .liberation-badge {
+            background: white;
+            color: #28a745;
+            padding: 30px;
+            border-radius: 15px;
+            margin: 25px 0;
+            border: 4px solid white;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
+            animation: pulse 1.5s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.02);
+            }
+        }
+
+        .liberation-badge h3 {
+            font-size: 2.2em;
+            margin-bottom: 10px;
+            color: #28a745;
+        }
+
+        .liberation-badge p {
+            font-size: 1.3em;
+            font-weight: bold;
+            color: #155724;
         }
 
         .confirmation-info {
@@ -165,33 +237,11 @@
             color: #28a745;
         }
 
-        .liberation-badge {
-            background: white;
-            color: #28a745;
-            padding: 25px;
-            border-radius: 15px;
-            margin: 25px 0;
-            border: 4px solid white;
-            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
-        }
-
-        .liberation-badge h3 {
-            font-size: 2em;
-            margin-bottom: 10px;
-            color: #28a745;
-        }
-
-        .liberation-badge p {
-            font-size: 1.3em;
-            font-weight: bold;
-            color: #155724;
-        }
-
         .btn-print {
             background: white;
             color: #28a745;
             padding: 15px 40px;
-            border: none;
+            border: 2px solid white;
             border-radius: 10px;
             font-size: 16px;
             font-weight: bold;
@@ -202,6 +252,7 @@
 
         .btn-print:hover {
             transform: scale(1.05);
+            box-shadow: 0 5px 15px rgba(255, 255, 255, 0.3);
         }
 
         .footer {
@@ -229,6 +280,27 @@
             .btn-print {
                 display: none;
             }
+            .liberation-badge {
+                animation: none;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .card {
+                padding: 25px;
+            }
+            
+            h1 {
+                font-size: 1.6em;
+            }
+            
+            .logo {
+                font-size: 3em;
+            }
+            
+            .liberation-badge h3 {
+                font-size: 1.8em;
+            }
         }
     </style>
 </head>
@@ -239,6 +311,10 @@
                 <div class="logo">🚗</div>
                 <h1>Registro de Saída</h1>
                 <p class="subtitle">Estacionamento Hospitalar</p>
+            </div>
+
+            <div class="info-box">
+                <p><strong>📝 Instruções:</strong> Preencha seus dados abaixo e receba seu comprovante de liberação do estacionamento.</p>
             </div>
 
             <form id="exitForm">
@@ -271,7 +347,7 @@
                     <input type="tel" id="phone" placeholder="(00) 00000-0000" required>
                 </div>
 
-                <button type="submit" class="btn">✓ Registrar Saída</button>
+                <button type="submit" class="btn">✓ Gerar Comprovante</button>
             </form>
 
             <div class="footer">
@@ -288,7 +364,7 @@
                 
                 <div class="liberation-badge">
                     <h3>🎫 ESTACIONAMENTO LIBERADO</h3>
-                    <p>Apresente ao estacionamento</p>
+                    <p>Apresente este comprovante</p>
                 </div>
                 
                 <div class="confirmation-info" id="confirmationInfo">
@@ -296,16 +372,17 @@
                 </div>
                 
                 <p style="margin: 25px 0; font-size: 1.2em;">
-                    <strong>Vaga autorizada pela Diretoria</strong>
+                    <strong>✓ Vaga autorizada pela Diretoria</strong>
                 </p>
                 
-                <button class="btn-print" onclick="window.print()">🖨️ Imprimir Comprovante</button>
-                <button class="btn-print" onclick="resetForm()">✓ Nova Saída</button>
+                <button class="btn-print" onclick="window.print()">🖨️ Imprimir</button>
+                <button class="btn-print" onclick="resetForm()">✓ Novo Registro</button>
             </div>
         </div>
     </div>
 
     <script>
+        // Formulário de saída
         document.getElementById('exitForm').addEventListener('submit', function(e) {
             e.preventDefault();
             
@@ -315,22 +392,24 @@
             const specialty = document.getElementById('specialty').value;
             const phone = document.getElementById('phone').value;
 
-            // Salvar no histórico (localStorage)
-            saveToHistory(location, crm, name, specialty, phone);
+            // Salvar e mostrar comprovante
+            const saved = saveRegistration(location, crm, name, specialty, phone);
             
-            // Mostrar comprovante
-            showConfirmation(name, crm, specialty, phone, location);
+            if (saved) {
+                showConfirmation(name, crm, specialty, phone, location);
+            }
         });
 
-        function saveToHistory(location, crm, name, specialty, phone) {
+        function saveRegistration(location, crm, name, specialty, phone) {
             try {
-                const data = localStorage.getItem('parkingData');
-                let parkingData = data ? JSON.parse(data) : { vehicles: { hvs: [], oncobio: [] }, history: [] };
+                // Buscar dados
+                let parkingData = JSON.parse(localStorage.getItem('parkingData') || '{"vehicles":{"hvs":[],"oncobio":[]},"history":[]}');
                 
-                const now = new Date();
+                const now = new Date().toISOString();
                 
-                // Adicionar ao histórico
-                const historyEntry = {
+                // Criar registro
+                const record = {
+                    id: Date.now(),
                     location: location,
                     crm: crm,
                     name: name,
@@ -341,12 +420,19 @@
                     duration: 0
                 };
                 
-                parkingData.history.push(historyEntry);
+                // Adicionar ao histórico
+                parkingData.history.push(record);
                 
                 // Salvar
                 localStorage.setItem('parkingData', JSON.stringify(parkingData));
+                
+                console.log('✅ Registro salvo:', record);
+                console.log('📊 Total de registros:', parkingData.history.length);
+                
+                return true;
             } catch (error) {
-                console.log('Erro ao salvar:', error);
+                console.error('❌ Erro ao salvar:', error);
+                return false;
             }
         }
 
