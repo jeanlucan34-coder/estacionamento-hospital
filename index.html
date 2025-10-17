@@ -392,22 +392,47 @@
             const specialty = document.getElementById('specialty').value;
             const phone = document.getElementById('phone').value;
 
+            console.log('📝 Tentando salvar registro...');
+            console.log('Dados:', {location, crm, name, specialty, phone});
+
             // Salvar e mostrar comprovante
             const saved = saveRegistration(location, crm, name, specialty, phone);
             
             if (saved) {
+                console.log('✅ Registro salvo com sucesso!');
                 showConfirmation(name, crm, specialty, phone, location);
+            } else {
+                console.error('❌ Falha ao salvar registro');
+                alert('Erro ao salvar registro. Tente novamente.');
             }
         });
 
         function saveRegistration(location, crm, name, specialty, phone) {
             try {
-                // Buscar dados
-                let parkingData = JSON.parse(localStorage.getItem('parkingData') || '{"vehicles":{"hvs":[],"oncobio":[]},"history":[]}');
+                console.log('🔍 Verificando localStorage...');
+                
+                // Buscar dados existentes
+                const existingData = localStorage.getItem('parkingData');
+                console.log('Dados existentes:', existingData);
+                
+                let parkingData;
+                if (existingData) {
+                    parkingData = JSON.parse(existingData);
+                } else {
+                    parkingData = {
+                        vehicles: {
+                            hvs: [],
+                            oncobio: []
+                        },
+                        history: []
+                    };
+                }
+                
+                console.log('📊 Histórico atual:', parkingData.history.length, 'registros');
                 
                 const now = new Date().toISOString();
                 
-                // Criar registro
+                // Criar registro - EXATAMENTE no mesmo formato do teste que funcionou
                 const record = {
                     id: Date.now(),
                     location: location,
@@ -420,18 +445,27 @@
                     duration: 0
                 };
                 
+                console.log('📝 Novo registro:', record);
+                
                 // Adicionar ao histórico
                 parkingData.history.push(record);
+                
+                console.log('💾 Salvando no localStorage...');
                 
                 // Salvar
                 localStorage.setItem('parkingData', JSON.stringify(parkingData));
                 
-                console.log('✅ Registro salvo:', record);
-                console.log('📊 Total de registros:', parkingData.history.length);
+                // Verificar se salvou
+                const verificacao = localStorage.getItem('parkingData');
+                const verificacaoData = JSON.parse(verificacao);
+                
+                console.log('✅ Verificação - Total de registros após salvar:', verificacaoData.history.length);
+                console.log('✅ Último registro salvo:', verificacaoData.history[verificacaoData.history.length - 1]);
                 
                 return true;
             } catch (error) {
-                console.error('❌ Erro ao salvar:', error);
+                console.error('❌ ERRO ao salvar:', error);
+                console.error('Stack:', error.stack);
                 return false;
             }
         }
@@ -477,6 +511,10 @@
             }
             e.target.value = value;
         });
+
+        // Log ao carregar a página
+        console.log('🚀 Formulário carregado');
+        console.log('📊 Dados no localStorage:', localStorage.getItem('parkingData'));
     </script>
 </body>
 </html>
